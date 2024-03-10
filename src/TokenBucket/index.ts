@@ -1,6 +1,6 @@
 import express from "express";
 
-const TokenBucketApp = express();
+export const TokenBucketApp = express();
 
 const PORT = 8080;
 
