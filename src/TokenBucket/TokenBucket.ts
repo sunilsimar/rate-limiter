@@ -16,5 +16,19 @@ export class TokenBucket {
     refill(){
         const now = Date.now();
         const timeSinceLastRefillInSeconds = (now - this.lastRefill)/SECONDS_CONVERSION;
+
+        const newTokens = timeSinceLastRefillInSeconds * this.refillRatePerSeconds;
+        this.tokens = Math.min(this.capacity, this.tokens + newTokens);
+        this.lastRefill = now;
+    }
+
+    allowRequests(): boolean{
+        this.refill()
+        if(this.tokens >= 1){
+            this.tokens -= 1;
+            return true;
+        }
+        return false;
     }
 }
+
